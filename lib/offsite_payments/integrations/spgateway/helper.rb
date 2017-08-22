@@ -31,6 +31,9 @@ module OffsitePayments #:nodoc:
             [field, @fields[field]]
           }
 
+          @fields['HashKey'] ||= OffsitePayments::Integrations::Spgateway.hash_key
+          @fields['HashIv'] ||= OffsitePayments::Integrations::Spgateway.hash_iv
+
           hash_raw_data = "HashKey=#{@fields['HashKey']}&#{raw_data}&HashIV=#{@fields['HashIv']}"
           add_field 'CheckValue', Digest::SHA256.hexdigest(hash_raw_data).upcase
         end
