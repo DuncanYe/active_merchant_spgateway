@@ -6,7 +6,7 @@ module OffsitePayments #:nodoc:
     module Spgateway
       class Helper < OffsitePayments::Helper
         FIELDS = %w(
-          MerchantID LangType MerchantOrderNo Amt ItemDesc TradeLimit ExpireDate ReturnURL NotifyURL CustomerURL ClientBackURL Email EmailModify LoginType OrderComment CREDIT CreditRed InstFlag UNIONPAY WEBATM VACC CVS BARCODE CUSTOM TokenTerm
+          MerchantID HashKey HashIv LangType MerchantOrderNo Amt ItemDesc TradeLimit ExpireDate ReturnURL NotifyURL CustomerURL ClientBackURL Email EmailModify LoginType OrderComment CREDIT CreditRed InstFlag UNIONPAY WEBATM VACC CVS BARCODE CUSTOM TokenTerm
         )
 
         FIELDS.each do |field|
@@ -31,7 +31,7 @@ module OffsitePayments #:nodoc:
             [field, @fields[field]]
           }
 
-          hash_raw_data = "HashKey=#{OffsitePayments::Integrations::Spgateway.hash_key}&#{raw_data}&HashIV=#{OffsitePayments::Integrations::Spgateway.hash_iv}"
+          hash_raw_data = "HashKey=#{@fields['HashKey']}&#{raw_data}&HashIV=#{@fields['HashIv']}"
           add_field 'CheckValue', Digest::SHA256.hexdigest(hash_raw_data).upcase
         end
       end
