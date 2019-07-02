@@ -32,11 +32,15 @@ module OffsitePayments #:nodoc:
           %w(SUCCESS CUSTOM).include? status
         end
 
-        def checksum_ok?
+        def checksum_ok?(hash_key = nil, hash_iv = nil)
           raw_data = URI.encode_www_form OffsitePayments::Integrations::Spgateway::CHECK_CODE_FIELDS.sort.map { |field|
             [field, @params[field]]
           }
-          hash_raw_data = "HashIV=#{OffsitePayments::Integrations::Spgateway.hash_iv}&#{raw_data}&HashKey=#{OffsitePayments::Integrations::Spgateway.hash_key}"
+
+          hash_iv ||= OffsitePayments::Integrations::Spgateway.hash_iv
+          hash_key ||= OffsitePayments::Integrations::Spgateway.hash_key
+
+          hash_raw_data = "HashIV=#{hash_iv}&#{raw_data}&HashKey=#{hash_key}"
           Digest::SHA256.hexdigest(hash_raw_data).upcase == check_code
         end
       end
