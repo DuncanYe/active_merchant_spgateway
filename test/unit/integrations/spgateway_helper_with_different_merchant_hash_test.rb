@@ -24,8 +24,6 @@ class SpgatewayHelperWithMerchantHashTest < Test::Unit::TestCase
     @helper.encrypted_data merchant_hash_key, merchant_hash_iv
     # HashKey=fkUea2sZawehznHFtgs2UOOLhQ6oC7Oc&Amt=500&MerchantID=MS36595603&MerchantOrderNo=709321562558751&TimeStamp=1403243286&Version=1.2&HashIV=Cku48ghNIe1SZQTP
     assert_equal '693D810065089DF99A74D978DAE53194DEB8B841F0359C91E29A2DFC8BF35D63', @helper.fields['CheckValue']
-    assert_equal nil, @helper.fields['HashKey']
-    assert_equal nil, @helper.fields['HashIv']
   end
 
 end

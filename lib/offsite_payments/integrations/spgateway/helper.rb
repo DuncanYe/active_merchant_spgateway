@@ -31,17 +31,11 @@ module OffsitePayments #:nodoc:
             [field, @fields[field]]
           }
 
-          @fields['HashKey'] ||= (hash_key || OffsitePayments::Integrations::Spgateway.hash_key)
-          @fields['HashIv'] ||= (hash_iv || OffsitePayments::Integrations::Spgateway.hash_iv)
+          hash_key ||= OffsitePayments::Integrations::Spgateway.hash_key
+          hash_iv ||= OffsitePayments::Integrations::Spgateway.hash_iv
 
-          hash_raw_data = "HashKey=#{@fields['HashKey']}&#{raw_data}&HashIV=#{@fields['HashIv']}"
+          hash_raw_data = "HashKey=#{hash_key}&#{raw_data}&HashIV=#{hash_iv}"
           add_field 'CheckValue', Digest::SHA256.hexdigest(hash_raw_data).upcase
-
-          # 因為 OffsitePayments::ActionViewHelper 會把 `@fields` 迭代塞入表單裡面，
-          # 導致 HTTP POST request 帶了 HashKey 跟 HashIV 資訊。
-          # source: https://git.io/fji0Z
-          @fields['HashKey'] = nil
-          @fields['HashIv'] = nil
         end
       end
 
