@@ -26,13 +26,13 @@ module OffsitePayments #:nodoc:
         def time_stamp(date)
           add_field 'TimeStamp', date.to_time.to_i
         end
-        def encrypted_data
+        def encrypted_data hash_key = nil, hash_iv = nil
           raw_data = URI.encode_www_form OffsitePayments::Integrations::Spgateway::CHECK_VALUE_FIELDS.sort.map { |field|
             [field, @fields[field]]
           }
 
-          @fields['HashKey'] ||= OffsitePayments::Integrations::Spgateway.hash_key
-          @fields['HashIv'] ||= OffsitePayments::Integrations::Spgateway.hash_iv
+          @fields['HashKey'] = @fields['HashKey'] || hash_key || OffsitePayments::Integrations::Spgateway.hash_key
+          @fields['HashIv'] = @fields['HashIv'] || hash_iv || OffsitePayments::Integrations::Spgateway.hash_iv
 
           hash_raw_data = "HashKey=#{@fields['HashKey']}&#{raw_data}&HashIV=#{@fields['HashIv']}"
           add_field 'CheckValue', Digest::SHA256.hexdigest(hash_raw_data).upcase
