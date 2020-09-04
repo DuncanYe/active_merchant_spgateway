@@ -27,8 +27,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'activemerchant'
-  spec.add_dependency 'offsite_payments'
+  spec.add_dependency 'activemerchant', '~> 1.60'
+  spec.add_dependency 'offsite_payments', '~> 2'
 
   spec.add_development_dependency "bundler", "~> 1.11"
   spec.add_development_dependency "pry", "~> 0.10.4"
