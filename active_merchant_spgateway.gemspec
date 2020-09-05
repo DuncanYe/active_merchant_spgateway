@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activemerchant', '~> 1.43.3'
   spec.add_dependency 'offsite_payments', '~> 2'
+  spec.add_dependency 'money', '~> 6.13', '>= 6.13.8'
 
   spec.add_development_dependency "bundler", "~> 1.11"
   spec.add_development_dependency "pry", "~> 0.10.4"
