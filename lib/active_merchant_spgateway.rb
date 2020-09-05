@@ -1,3 +1,4 @@
+require 'openssl'
 require 'action_view'
 require 'active_merchant_spgateway/version'
 require 'active_merchant'
