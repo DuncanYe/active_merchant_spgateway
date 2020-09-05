@@ -6,8 +6,8 @@ require 'active_merchant_spgateway/version'
 Gem::Specification.new do |spec|
   spec.name          = "active_merchant_spgateway"
   spec.version       = ActiveMerchantSpgateway::VERSION
-  spec.authors       = ["RJ"]
-  spec.email         = ["jeffrey410469@gmail.com"]
+  spec.authors       = ["RJ", "CHH"]
+  spec.email         = ["chh@backer-founder.com"]
 
   spec.summary       = %q{Unofficial Spgateway(智付通) gem base on active_merchant and inspired by https://github.com/imgarylai/active_merchant_pay2go}
   spec.description   = %q{This is an unofficial SpGateway(智付通) gateway gem base on active_merchant, including helper form helper methods and gateway}
