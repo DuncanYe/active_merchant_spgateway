@@ -17,6 +17,11 @@ module OffsitePayments #:nodoc:
           end
         end
 
+        def initialize(raw)
+          raw = CGI.unescape(raw) if raw.present?
+          super
+        end
+
         def success?
           status == 'SUCCESS'
         end
