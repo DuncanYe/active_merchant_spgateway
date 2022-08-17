@@ -17,11 +17,6 @@ module OffsitePayments #:nodoc:
           end
         end
 
-        def initialize(raw)
-          raw = CGI.unescape(raw) if raw.present?
-          super
-        end
-
         def success?
           status == 'SUCCESS'
         end
@@ -48,6 +43,17 @@ module OffsitePayments #:nodoc:
           hash_raw_data = "HashIV=#{hash_iv}&#{raw_data}&HashKey=#{hash_key}"
           Digest::SHA256.hexdigest(hash_raw_data).upcase == check_code
         end
+
+        private
+
+          def parse(post)
+            @raw = post.to_s
+
+            for line in CGI.unescape(@raw).split('&')
+              key, value = *line.scan( %r{^([A-Za-z0-9_.-]+)\=(.*)$} ).flatten
+              params[key] = value.to_s if key.present?
+            end
+          end
       end
     end
   end
